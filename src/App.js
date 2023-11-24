@@ -1,25 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
+import './App.css'
+import React, { useState } from 'react'
+import Header from './components/Header'
+import Footer from './components/Footer'
+import AvatarCreator from './components/AvatarCreator'
+import Button from './components/Button'
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [avatarName, setAvatarName] = useState('')
+    const [resetAvatar, setResetAvatar] = useState(false)
+    const [avatarNameInput, setAvatarNameInput] = useState('')
+
+    const handleInputChange = (e) => {
+        const avatarName = e.target.value
+        setAvatarNameInput(avatarName)
+        setAvatarName(avatarName)
+    }
+
+    const handleReset = () => {
+        setAvatarName('')
+        setAvatarNameInput('')
+        setResetAvatar((prevReset) => !prevReset)
+    }
+
+    return (
+        <div className="app">
+            <Header
+                title="Create Avatar"
+                avatarNameInput={avatarNameInput}
+                handleInputChange={handleInputChange}
+            />
+            <AvatarCreator key={resetAvatar} avatarName={avatarName} />
+            <Button onClick={handleReset} CTA="Reset" />
+            <Footer avatarName={avatarName} />
+        </div>
+    )
 }
 
-export default App;
+export default App
